@@ -2,13 +2,13 @@ pipeline {
     agent { label 'slave-node' }
 
     stages {
-       stage('Checkout') {
+        stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-    }
-            stage('Install Nginx') {
+
+        stage('Install Nginx') {
             steps {
                 sh '''
                   sudo apt-get update
@@ -16,15 +16,16 @@ pipeline {
                 '''
             }
         }
-     stage('Copy HTML File') {
+
+        stage('Copy HTML File') {
             steps {
-                // path
                 sh '''
                 sudo cp index.html /var/www/html/index.html
                 '''
             }
         }
-    stage('Restart Nginx') {
+
+        stage('Restart Nginx') {
             steps {
                 sh '''
                 sudo systemctl restart nginx
@@ -32,7 +33,8 @@ pipeline {
                 '''
             }
         }
-     stage('Verify Nginx') {
+
+        stage('Verify Nginx') {
             steps {
                 sh '''
                 sudo systemctl status nginx
@@ -40,5 +42,5 @@ pipeline {
                 '''
             }
         }
-
+    }
 }

@@ -1,11 +1,44 @@
 pipeline {
-    agent any
+    agent { label 'slave-node' }
 
     stages {
-        stage('Hello') {
+       stage('Checkout') {
             steps {
-                echo 'Hello, World!'
+                checkout scm
             }
         }
     }
+            stage('Install Nginx') {
+            steps {
+                sh '''
+                  sudo apt-get update
+                  sudo apt-get install -y nginx
+                '''
+            }
+        }
+     stage('Copy HTML File') {
+            steps {
+                // path
+                sh '''
+                sudo cp index.html /var/www/html/index.html
+                '''
+            }
+        }
+    stage('Restart Nginx') {
+            steps {
+                sh '''
+                sudo systemctl restart nginx
+                sudo systemctl enable nginx
+                '''
+            }
+        }
+     stage('Verify Nginx') {
+            steps {
+                sh '''
+                sudo systemctl status nginx
+                curl -I http://localhost
+                '''
+            }
+        }
+
 }

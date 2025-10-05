@@ -24,9 +24,12 @@ pipeline {
         stage('Copy and run File') {
             steps {
                 sh '''
-                    sudo cp app.py /opt/app.py
-                    sudo cp requirements.txt /opt/requirements.txt
-                    nohup python3 app.py > flask.log 2>&1 &
+             mkdir -p my-flask-app
+            cp app.py my-flask-app/
+            cp requirements.txt my-flask-app/
+            cd my-flask-app
+            sudo python3 -m pip install --break-system-packages -r requirements.txt
+            nohup python3 app.py > flask.log 2>&1 &
                 '''
             }
         }

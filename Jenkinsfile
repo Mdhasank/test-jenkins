@@ -15,7 +15,7 @@ pipeline {
                   sudo apt update
                   sudo apt install python3 -y
                   sudo apt install python3-pip -y
-                  sudo python3 -m pip3 install -r requirements.txt
+                  sudo python3 -m pip install -r requirements.txt
                 '''
             }
         }

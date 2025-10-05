@@ -24,6 +24,7 @@ pipeline {
             steps {
                 sh '''
                     sudo cp app.py /opt/app.py
+                    sudo cp requirements.txt /opt/requirements.txt
                     nohup python3 app.py &
                 '''
             }

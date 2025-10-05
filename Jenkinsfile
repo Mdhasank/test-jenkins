@@ -5,40 +5,25 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                sh "pwd"
             }
         }
 
-        stage('Install Nginx') {
+        stage('Install python and pip') {
             steps {
                 sh '''
-                  sudo apt-get update
-                  sudo apt-get install -y nginx
+                  sudo apt update
+                  sudo apt install python3 -y
+                  sudo apt install python-pip3 -y
                 '''
             }
         }
 
-        stage('Copy HTML File') {
+        stage('Copy and run File') {
             steps {
                 sh '''
-                sudo cp index.html /var/www/html/index.html
-                '''
-            }
-        }
-
-        stage('Restart Nginx') {
-            steps {
-                sh '''
-                sudo systemctl enable nginx
-                sudo systemctl restart nginx
-                '''
-            }
-        }
-
-        stage('Verify Nginx') {
-            steps {
-                sh '''
-                sudo systemctl status nginx
-                curl -I http://localhost
+                sudo cp app.py /opt/app.py
+                nohup python3 app.py
                 '''
             }
         }

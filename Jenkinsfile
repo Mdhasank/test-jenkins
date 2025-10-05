@@ -24,10 +24,9 @@ pipeline {
         stage('Copy and run File') {
             steps {
                 sh '''
-             mkdir -p my-flask-app
-            cp app.py my-flask-app/
-            cp requirements.txt my-flask-app/
-            cd my-flask-app
+            cp /home/ubuntu/jenkins2/workspace/install-python/app.py /home/ubuntu/my-flask/app.py
+            cp /home/ubuntu/jenkins2/workspace/install-python/requirements.txt /home/ubuntu/my-flask/requirements.txt
+            cd /home/ubuntu/my-flask/
             sudo python3 -m pip install --break-system-packages -r requirements.txt
             nohup python3 app.py > flask.log 2>&1 &
                 '''

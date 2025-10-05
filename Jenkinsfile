@@ -26,7 +26,7 @@ pipeline {
                 sh '''
                     sudo cp app.py /opt/app.py
                     sudo cp requirements.txt /opt/requirements.txt
-                    nohup python3 app.py &
+                    nohup python3 app.py > flask.log 2>&1 &
                 '''
             }
         }
